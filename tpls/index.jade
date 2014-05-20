@@ -1,0 +1,15 @@
+doctype
+html
+  head
+  body
+    #container
+      each a in '0123456789'
+        .name
+    script.
+      var require = {
+        paths: {
+          jquery : 'libs/jquery-1.7.1.min'
+        },
+        deps : ['app.js']
+      };
+    script(type="text/javascript", src="libs/require.js").
