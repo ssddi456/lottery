@@ -1,21 +1,23 @@
 define([
+  'ko',
   './name_list'
 ],function(
+  ko,
   name_list
 ){
-  function RandomName( $el ) {
-    this.el = $el;
+  function RandomName( name ) {
     this.interval = 200;
+    this.text = ko.observable( name || '');
   }
   var fn = RandomName.prototype;
   fn.run = function() {
+    var _name_list = name_list;
     var self = this;
     if( !this.timer ){
-      this.el.css('background', 'yellow');
     }
     this.timer = setTimeout(function() {
-      self.el.text( 
-        name_list[(Math.random() * name_list.length ) | 1] );
+      self.text( 
+        _name_list[(Math.random() * _name_list.length ) | 1] );
       self.run();
     }, this.interval);
   }
@@ -23,9 +25,7 @@ define([
     if( this.timer ){
       this.timer = clearTimeout(this.timer);
     }
-
-    this.el.text(name)
-    .css('background', 'green');
+    this.text(name);
   }
   return RandomName;
 });

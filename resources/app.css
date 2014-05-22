@@ -1,0 +1,55 @@
+.bg {
+  background: url(./bg.png) center center #000000;
+  background-attachment: fixed;
+  font-family: 微软雅黑;
+}
+.container {
+  margin: 20px auto 0;
+  width: 1000px;
+}
+.container h1 {
+  text-align: center;
+  font-size: 70px;
+  color: #fff;
+}
+.buttons {
+  margin-top: 60px;
+  overflow: auto;
+}
+.buttons .left {
+  float: left;
+}
+.buttons .right {
+  float: right;
+}
+.buttons button {
+  padding: 10px 20px;
+}
+.wrapper {
+  position: relative;
+  overflow: auto;
+}
+.wrapper .name {
+  width: 500px;
+  font-size: 60px;
+  font-weight: 800;
+  float: left;
+  text-align: center;
+  color: #fff;
+  overflow: visible;
+}
+.wrapper.lv3 .name,
+.wrapper.lv2 .name {
+  font-size: 100px;
+  float: none;
+  margin: 100px auto;
+  text-align: center;
+  width: 800px;
+}
+.edit_name_list {
+  width: 1000px;
+  margin: 0 auto;
+}
+.edit_name_list textarea {
+  height: 800px;
+}
