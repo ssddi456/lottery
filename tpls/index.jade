@@ -6,7 +6,7 @@ html
     link(rel="stylesheet", href="resources/app.css")
   body.bg
     .navbar.navbar-inverse.navbar-static-top
-      ul.nav.navbar-nav.pull-right
+      ul.nav.navbar-nav.pull-right.middle-nav
         // ko if:(page() != 'setting')
         li
           .btn.btn-default(data-bind="click: page.bind(null,'setting')")
@@ -21,49 +21,71 @@ html
         // /ko
     // ko if:(page() == 'lottory')
     .container(data-bind="click : toggleRunning")
-      h1(data-bind="text : goods_description")
+      h1(data-bind="text : goods_description() + current_stage().status()")
+      p(data-bind="text: '(已抽取' + picked_name() + '/' + total_name + ')'")
       .wrapper(data-bind="{\
                             attr : {\
                               class : wrapper_Class\
                             },\
                             visible : !edit_name_list()\
                           }")
-        // ko foreach : current_stage_res
+        // ko foreach : current_res
         .name(data-bind="text : text")
         // /ko
-      .buttons(data-bind="visible : !isRunning ()")
-        button.left(data-bind="{\
+    .nav.navbar-inverse.navbar-fixed-bottom(data-bind="visible : !isRunning ()")
+      .container.middle-nav
+        button.btn.btn-default.left(data-bind="{\
                             click   : prev_stage,\
                             visible : has_prev_stage\
                           }")
-          | <=前一个奖项
-        button.right(data-bind="{\
+          i.glyphicon.glyphicon-chevron-left
+          | 前一个奖项
+        button.btn.btn-default.pull-right(data-bind="{\
                             click   : next_stage,\
                             visible : has_next_stage\
                           }")
-          | 后一个奖项 =>
+          i.glyphicon.glyphicon-chevron-right
+          | 后一个奖项
         
     // /ko
     // ko if:(page() == 'setting')
     .container
-      button.btn.btn-default(data-bind="click : toggle(edit_name_list)")
-        | 编辑人员名单
-      button.btn.btn-default(data-bind="click : toggle(edit_goods)")
-        | 编辑奖项
-      button.btn.btn-default(data-bind="click  : exports_res")
-        | 获得结果(json)
-      button.btn.btn-default(data-bind="click  : exports_res.bind(null,'cvs')")
-        | 获得结果(cvs)
-    // /ko
-    // ko if:(edit_name_list())
-    .edit_name_list
-      textarea.input_names(placeholder="粘贴入人员名单",
-               style="width:1000px;",
-               data-bind="value : names")
-    // /ko
-    // ko if:(edit_goods())
-    .row
-
+      .row
+        .col-sm-12
+          button.btn.btn-default(data-bind="click : toggle(edit_name_list)")
+            | 编辑人员名单
+          button.btn.btn-default(data-bind="click : toggle(edit_goods)")
+            | 编辑奖项
+          button.btn.btn-default(data-bind="click  : exports_res")
+            | 获得结果(json)
+          button.btn.btn-default(data-bind="click  : exports_res.bind(null,'cvs')")
+            | 获得结果(cvs)
+          button.btn.btn-default(data-bind="click  : reset")
+            | 重置设置
+      // ko if:(edit_name_list())
+      .edit_name_list
+        textarea.input_names(placeholder="粘贴入人员名单",
+                 style="width:1000px;",
+                 data-bind="value : names")
+      // /ko
+      // ko if:(edit_goods())
+      .row
+        .col-sm-12
+          table.table
+            tbody(data-bind="foreach: goods")
+              tr
+                td
+                  input(type="text",data-bind="value:name",placeholder="奖品名")
+                td
+                  input(type="text",data-bind="value:peer",placeholder="每次抽取")
+                td
+                  input(type="text",data-bind="value:total",placeholder="总数（为空则是无限制）")
+                td
+                  .btn.btn-default(data-bind="click: $parent.goods.remove.bind($parent.goods,$data)")
+                    i.glyphicon.glyphicon-remove
+          .btn.btn-default(data-bind="click:function(){ goods.push({ name : '', peer : 10, total : ''})}")
+            | add goods
+      // /ko
     // /ko
     script.
       var require = {

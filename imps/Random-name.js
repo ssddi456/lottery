@@ -13,8 +13,7 @@ define([
   fn.run = function() {
     var _name_list = name_list;
     var self = this;
-    if( !this.timer ){
-    }
+
     this.timer = setTimeout(function() {
       self.text( 
         _name_list[(Math.random() * _name_list.length ) | 1] );

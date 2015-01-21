@@ -1,4 +1,5 @@
 require([
+  './imps/goods_list',
   './imps/name_list',
   './imps/lottory_history',
   'ko',
@@ -6,6 +7,7 @@ require([
   './imps/Random-name',
   './imps/lottory_runner'
 ],function(
+  goods_list,
   name_list,
   lottory_history,
   ko,
@@ -15,6 +17,7 @@ require([
 ){
   var vm = {
     page              : ko.observable('lottory'),
+    current_stage     : lottory_runner.current_stage,
     goods_description : lottory_runner.current_stage_name,
     isRunning         : ko.observable(false),
     isGaining         : ko.observable(false),
@@ -34,13 +37,13 @@ require([
     },
     toggleRunning     : function() {
       var self = this;
-      var randomNames = lottory_runner.current_stage_res();
+      var randomNames = lottory_runner.current_res();
       if( ! this.isRunning() && !this.isGaining() ){
 
         if( lottory_runner.current_stage_end() ){
-          return
+          return;
         }
-
+        lottory_runner.next();
         randomNames.forEach(function( name ) {
           name.run();
         });
@@ -69,7 +72,7 @@ require([
         },1500);
 
         function syncGain() {
-          lottory_runner.gain( lottory_runner.current_stage().n ).forEach(function(name, i) {
+          lottory_runner.gain().forEach(function(name, i) {
             randomNames[i].finish(name);
           });
 
@@ -91,7 +94,7 @@ require([
     },
     has_prev_stage    : lottory_runner.has_prev_stage,
 
-    current_stage_res : lottory_runner.current_stage_res,
+    current_res       : lottory_runner.current_res,
 
     exports_res       : function( type ) {
       lottory_runner.exports( type )
@@ -99,10 +102,18 @@ require([
 
     edit_name_list    : ko.observable(false),
     
-    edit_goods        : ko.observable(false),
+    edit_goods        : goods_list.edit,
 
-    names             : name_list.names
+    names             : name_list.names,
+    picked_name       : lottory_runner.total_res,
+    total_name        : name_list.length,
+    goods             : goods_list,
+    reset             : function() {
+      localStorage.setItem( 'lottory_ret', '' );
+      localStorage.setItem( 'goods',       '' );
+    }
   };
+
   vm.buttonText       = ko.computed(function() {
                           var gain = vm.isGaining();
                           var run  = vm.isRunning();
@@ -116,7 +127,11 @@ require([
                           return '开始';
                         });
   vm.wrapper_Class    = ko.computed(function() {
-                          return 'wrapper lv' + lottory_runner.current_stage().lv ;
+                          var len = lottory_runner.current_res().length;
+                          var lv = len > 6
+                                      ? 1
+                                      : 3;
+                          return 'wrapper lv' + lv;
                         });
 
   ko.applyBindings(vm);

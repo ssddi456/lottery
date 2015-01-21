@@ -1,37 +1,36 @@
 define([
+  'ko',
   '_'
 ],function(
+  ko,
   __
 ){
   var default_list = [{
-      "name" : '三等奖',
-      "pic"  : 'path_to_goods.png',
-      "n"    : 20, // number of goods
-      "split": 2,
-      lv     : 1
-    },{
-      "name" : '二等奖',
-      "pic"  : 'path_to_goods.png',
-      "n"    : 9, // number of goods
-      "split": 9,
-      lv     : 2
-    },{
-      "name" : '一等奖',
-      "pic"  : 'path_to_goods.png',
-      "n"    : 1, // number of goods
-      "split": 1,
-      lv     : 3
-    }];
+    name  : '三等奖',
+    peer  : 10,
+    total : 20
+  },{
+    name  : '二等奖',
+    peer  : 9,
+    total : ''
+  },{
+    name  : '一等奖',
+    peer  : 1,
+    total : ''
+  }];
 
-  var list =  [];
-  default_list.forEach(function( good ) {
-    var total = good.n;
-    var peer  = good.n = good.n / good.split;
-    var name  = good.name
-    _.range(good.split).forEach(function(i) {
-      good.name =  name + ' (' + (peer * (i +1))+'/' + total + ')'
-      list.push(JSON.parse(JSON.stringify(good)));
-    });
+
+  var ret = ko.observableArray();
+  var defaults= JSON.parse(localStorage.getItem('goods') || '[]');
+  ret( defaults.length ? defaults : default_list );
+
+  ret.edit = ko.observable(false);
+  ret.edit.subscribe(function() {
+    console.log(' write goods');
+    setTimeout(function() {
+      localStorage.setItem('goods', JSON.stringify(ret())); 
+    })
   });
-  return JSON.parse(JSON.stringify(list));
+
+  return ret;
 });

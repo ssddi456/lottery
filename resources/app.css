@@ -12,6 +12,11 @@
   font-size: 70px;
   color: #fff;
 }
+.container p {
+  text-align: center;
+  color: #fff;
+  font-size: 30px;
+}
 .buttons {
   margin-top: 60px;
   overflow: auto;
@@ -31,7 +36,7 @@
 }
 .wrapper .name {
   width: 470px;
-  font-size: 50px;
+  font-size: 48px;
   font-weight: 800;
   float: left;
   text-align: center;
@@ -52,4 +57,7 @@
 }
 .edit_name_list textarea {
   height: 800px;
+}
+.nav .middle-nav {
+  margin: 10px auto 10px;
 }
