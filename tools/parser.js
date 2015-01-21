@@ -22,13 +22,15 @@ var configures = [{
       if( err ){
         return done(err);
       }
-      var parser  = new less.Parser({ 
-                      filename : path.basename(file),
-                      paths    : [conf.root]
-                    });
-      parser.parse(code,function(err, tree) {
-        done(err, tree && tree.toCSS());
-      })
+
+      less.render(code,
+        { 
+          filename : path.basename(file),
+          paths    : [conf.root]
+        },
+        function(err, tree) {
+          done(err, tree && tree.css);
+        });
     })
   }
 }];

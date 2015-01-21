@@ -1,14 +1,27 @@
 doctype
 html
   head
-    link(rel="stylesheet", type="text/css", href="resources/app.css")
+    meta(charset="utf8")
+    link(rel="stylesheet", href="resources/twitter-bootstrap/3.2.0/css/bootstrap.min.css")
+    link(rel="stylesheet", href="resources/app.css")
   body.bg
-    .container(data-bind="{\
-                            click : toggleRunning\
-                          }")
-      h1(data-bind="{\
-                      text : goods_description\
-                    }")
+    .navbar.navbar-inverse.navbar-static-top
+      ul.nav.navbar-nav.pull-right
+        // ko if:(page() != 'setting')
+        li
+          .btn.btn-default(data-bind="click: page.bind(null,'setting')")
+            a.glyphicon.glyphicon-wrench(href="#") 
+              |  
+        // /ko
+        // ko if:(page() != 'lottory')
+        li
+          .btn.btn-default(data-bind="click: page.bind(null,'lottory')")
+            i.glyphicon.glyphicon-ok(href="#")
+              |  
+        // /ko
+    // ko if:(page() == 'lottory')
+    .container(data-bind="click : toggleRunning")
+      h1(data-bind="text : goods_description")
       .wrapper(data-bind="{\
                             attr : {\
                               class : wrapper_Class\
@@ -16,13 +29,9 @@ html
                             visible : !edit_name_list()\
                           }")
         // ko foreach : current_stage_res
-        .name(data-bind="{\
-                          text : text\
-                        }")
+        .name(data-bind="text : text")
         // /ko
-      .buttons(data-bind="{\
-                             visible : !isRunning ()\
-                          }")
+      .buttons(data-bind="visible : !isRunning ()")
         button.left(data-bind="{\
                             click   : prev_stage,\
                             visible : has_prev_stage\
@@ -33,26 +42,29 @@ html
                             visible : has_next_stage\
                           }")
           | 后一个奖项 =>
-        button(data-bind="{\
-                            click  : exports_res,\
-                            visible:!has_next_stage()\
-                          }")
-          | 获得结果
-        button(data-bind="{\
-                            click : function(vm, e ){\
-                                      e.stopPropagation();\
-                                      edit_name_list(!edit_name_list())\
-                                    }\
-                          }")
-          | 编辑人员名单
-    .edit_name_list(data-bind="{\
-                                  visible : edit_name_list\
-                              }")
+        
+    // /ko
+    // ko if:(page() == 'setting')
+    .container
+      button.btn.btn-default(data-bind="click : toggle(edit_name_list)")
+        | 编辑人员名单
+      button.btn.btn-default(data-bind="click : toggle(edit_goods)")
+        | 编辑奖项
+      button.btn.btn-default(data-bind="click  : exports_res")
+        | 获得结果(json)
+      button.btn.btn-default(data-bind="click  : exports_res.bind(null,'cvs')")
+        | 获得结果(cvs)
+    // /ko
+    // ko if:(edit_name_list())
+    .edit_name_list
       textarea.input_names(placeholder="粘贴入人员名单",
                style="width:1000px;",
-               data-bind="{\
-                           value : names\
-               }")
+               data-bind="value : names")
+    // /ko
+    // ko if:(edit_goods())
+    .row
+
+    // /ko
     script.
       var require = {
         paths: {

@@ -75,9 +75,21 @@ define([
     record : function() {
       // write to storage
     },
-    exports : function() {
-      var record = JSON.stringify(goods_list);
-      download('lottory_ret.json', record);
+    exports : function( type ) {
+      if( type == 'cvs' ){
+        download('lottory_ret.cvs', 
+          goods_list
+            .map(function( good ) {
+              return (good.res||[]).map(function( name ) {
+                name + ',' + good.name;
+              });
+            })
+            .reduce(Array.prototype.concat.call)
+            .join('\n'))
+      } else {
+        var record = JSON.stringify(goods_list);
+        download('lottory_ret.json', record);
+      }
     },
     init    : function() {
       // load from storage
