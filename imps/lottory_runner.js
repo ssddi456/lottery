@@ -83,14 +83,16 @@ define([
     },
     exports : function( type ) {
       if( type == 'cvs' ){
+        var concat = Array.prototype.concat;
+        var concat_call = Function.prototype.call.bind(concat);
+
         download('lottory_ret.cvs', 
-          lottory_ret
-            .map(function( ret ) {
-              return (ret.res||[]).map(function( name ) {
-                name + ',' + ret.name;
-              });
-            })
-            .reduce(Array.prototype.concat.call)
+          _.flatten(
+            _.map(lottory_ret,function( ret ) {
+                return (ret.res||[]).map(function( name ) {
+                  return name + ',' + ret.name;
+                });
+              }))
             .join('\n'))
       } else {
         var record = JSON.stringify(lottory_ret);
@@ -116,7 +118,7 @@ define([
       current_stage         = goods_list()[n];
       current_stage.process = current_stage.process || res.length;
       current_stage.total   = current_stage.total || Infinity;
-      current_stage.res     = current_stage.res || res;
+      current_stage.res     = res;
       current_stage.status  = current_stage.status || ko.observable('('+ current_stage.process + '/' + current_stage.total + ')');
       current_stage.end = current_stage.process >= current_stage.total;
 

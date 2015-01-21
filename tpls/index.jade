@@ -7,10 +7,16 @@ html
   body.bg
     .navbar.navbar-inverse.navbar-static-top
       ul.nav.navbar-nav.pull-right.middle-nav
+        li
+          .btn.btn-default(data-toggle="tooltip" 
+            data-placement="bottom" 
+            title="要导出数据，请点击旁边的扳手，点击“获得结果(cvs)”按钮")
+            i.glyphicon.glyphicon-question-sign(href="#") 
+              |  
         // ko if:(page() != 'setting')
         li
           .btn.btn-default(data-bind="click: page.bind(null,'setting')")
-            a.glyphicon.glyphicon-wrench(href="#") 
+            i.glyphicon.glyphicon-wrench(href="#") 
               |  
         // /ko
         // ko if:(page() != 'lottory')
@@ -32,7 +38,7 @@ html
         // ko foreach : current_res
         .name(data-bind="text : text")
         // /ko
-    .nav.navbar-inverse.navbar-fixed-bottom(data-bind="visible : !isRunning ()")
+    .navbar.navbar-inverse.navbar-fixed-bottom(data-bind="visible : !isRunning ()")
       .container.middle-nav
         button.btn.btn-default.left(data-bind="{\
                             click   : prev_stage,\
@@ -96,6 +102,12 @@ html
         },
         deps : ['app.js']
       };
+    script(src="resources/jquery.js")
+    script(src="resources/twitter-bootstrap/3.2.0/js/bootstrap.js")
     script(type="text/javascript", src="libs/require.js").
     script.
       document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>');
+
+      +function(){
+        $('[data-toggle="tooltip"]').tooltip();
+      }()

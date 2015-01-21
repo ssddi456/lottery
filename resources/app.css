@@ -58,6 +58,9 @@
 .edit_name_list textarea {
   height: 800px;
 }
-.nav .middle-nav {
+.navbar {
+  background: transparent;
+}
+.navbar .middle-nav {
   margin: 10px auto 10px;
 }

@@ -135,5 +135,4 @@ require([
                         });
 
   ko.applyBindings(vm);
-
 });
