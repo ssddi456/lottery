@@ -21,7 +21,8 @@ define([
     console.log(' write goods');
     setTimeout(function() {
       localStorage.setItem('goods', JSON.stringify(ret())); 
-    })
+      location.reload();
+    });
   };
 
   return ret;

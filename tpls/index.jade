@@ -48,9 +48,14 @@ html
           |  我已看懂
     // /ko 
     // ko if:(page() == 'lottory')
-    .container(data-bind="click : toggleRunning")
+    .container
       h1(data-bind="text : goods_description() + current_stage().status()")
-      p(data-bind="text: '(已抽取' + picked_name() + '/' + total_name + ')'")
+      .row
+        .col-sm-12
+          .btn.btn-default(style="margin:0 auto;width:190px;display:block;"
+            data-bind="text : isRunning() ? '停！！' : '抽 ~ ~',\
+                       click: toggleRunning")
+      p(data-bind="text: '总人数 : ' + total_name + ')'")
       .wrapper(data-bind="{\
                             attr : {\
                               class : wrapper_Class\

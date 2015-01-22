@@ -111,6 +111,7 @@ require([
     reset             : function() {
       localStorage.setItem( 'lottory_ret', '' );
       localStorage.setItem( 'goods',       '' );
+      location.reload();
     }
   };
 
