@@ -7,24 +7,46 @@ html
   body.bg
     .navbar.navbar-inverse.navbar-static-top
       ul.nav.navbar-nav.pull-right.middle-nav
+        // ko if:(page() != 'help')
         li
-          .btn.btn-default(data-toggle="tooltip" 
+          .btn.btn-default(data-bind="click: page.bind(null,'help')"
+            data-toggle="tooltip" 
             data-placement="bottom" 
             title="要导出数据，请点击旁边的扳手，点击“获得结果(cvs)”按钮")
-            i.glyphicon.glyphicon-question-sign(href="#") 
-              |  
+            i.glyphicon.glyphicon-question-sign() 
+            |  
         // ko if:(page() != 'setting')
         li
           .btn.btn-default(data-bind="click: page.bind(null,'setting')")
-            i.glyphicon.glyphicon-wrench(href="#") 
-              |  
+            i.glyphicon.glyphicon-wrench
+            |  
         // /ko
         // ko if:(page() != 'lottory')
         li
           .btn.btn-default(data-bind="click: page.bind(null,'lottory')")
-            i.glyphicon.glyphicon-ok(href="#")
-              |  
+            i.glyphicon.glyphicon-ok
+            |  
         // /ko
+        // /ko
+        // /ko
+    // ko if:(page() == 'help' )
+    .container
+      h1 帮助
+      p
+        ul(style="color:white;list-style-type:binary;")
+          li 在设置页点击 编辑人员名单 ，输入待抽奖人员名单（按行分隔），再点一下以保存。
+          li 在设置页点击 编辑奖项 ，编辑奖项，完成后点击保存以保存。
+          li 每个奖项设置项依次为 名称，每次抽取数，总数，总数可为空，表示数目无限（方便随时加抽）
+          li 设置保存完成后刷新页面，开始抽奖。点击页面中部以开始或暂停。
+          li 一个奖项抽取完成后，点击下一个奖项继续。
+          li 中途刷新页面并不会导致抽奖结果丢失。
+          li 全部抽取完成后，点击右上的扳手进入设置页面。点击 获得结果 以输出结果。
+          li 一次抽奖结束后，想要进行其他的抽奖活动，进入设置页面，点击 重置设置，再进行其他活动。
+          li 恢复数据可根据导出抽奖日志进行。
+        .btn.btn-default(data-bind="click: page.bind(null,'setting')")
+          i.glyphicon.glyphicon-ok
+          |  我已看懂
+    // /ko 
     // ko if:(page() == 'lottory')
     .container(data-bind="click : toggleRunning")
       h1(data-bind="text : goods_description() + current_stage().status()")
@@ -56,6 +78,7 @@ html
     // /ko
     // ko if:(page() == 'setting')
     .container
+      h1 设置
       .row
         .col-sm-12
           button.btn.btn-default(data-bind="click : toggle(edit_name_list)")
@@ -66,6 +89,8 @@ html
             | 获得结果(json)
           button.btn.btn-default(data-bind="click  : exports_res.bind(null,'cvs')")
             | 获得结果(cvs)
+          button.btn.btn-default(data-bind="click  : exports_history")
+            | 获得抽奖日志
           button.btn.btn-default(data-bind="click  : reset")
             | 重置设置
       // ko if:(edit_name_list())
@@ -91,6 +116,7 @@ html
                     i.glyphicon.glyphicon-remove
           .btn.btn-default(data-bind="click:function(){ goods.push({ name : '', peer : 10, total : ''})}")
             | add goods
+          .btn.btn-default(data-bind="click:goods.save")
       // /ko
     // /ko
     script.

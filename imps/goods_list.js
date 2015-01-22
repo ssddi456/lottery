@@ -25,12 +25,12 @@ define([
   ret( defaults.length ? defaults : default_list );
 
   ret.edit = ko.observable(false);
-  ret.edit.subscribe(function() {
+  ret.save = function(){
     console.log(' write goods');
     setTimeout(function() {
       localStorage.setItem('goods', JSON.stringify(ret())); 
     })
-  });
+  };
 
   return ret;
 });

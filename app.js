@@ -133,6 +133,8 @@ require([
                                       : 3;
                           return 'wrapper lv' + lv;
                         });
-
+  if( name_list.names() == 'xxx' ){
+    vm.page('help');
+  }
   ko.applyBindings(vm);
 });
