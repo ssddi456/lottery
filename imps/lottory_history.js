@@ -5,7 +5,7 @@ define([
 ){
   var history = [];
   history.log = function() {
-    history.push( [].slice(arguments ) );
+    history.push( [].slice.call(arguments) );
     localStorage.setItem('lottory_history', JSON.stringify(history) );
   }
   history.exports = function() {
