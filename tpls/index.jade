@@ -103,16 +103,20 @@ html
             tbody(data-bind="foreach: goods")
               tr
                 td
+                  | 奖品名
                   input(type="text",data-bind="value:name",placeholder="奖品名")
                 td
+                  | 每次抽取
                   input(type="text",data-bind="value:peer",placeholder="每次抽取")
                 td
+                  | 总数（为空则是无限制）
                   input(type="text",data-bind="value:total",placeholder="总数（为空则是无限制）")
                 td
                   .btn.btn-default(data-bind="click: $parent.goods.remove.bind($parent.goods,$data)")
                     i.glyphicon.glyphicon-remove
           .btn.btn-default(data-bind="click:function(){ goods.push({ name : '', peer : 10, total : ''})}")
             | 添加奖项
+          |  
           .btn.btn-default(data-bind="click:goods.save")
             | 保存
     // /ko

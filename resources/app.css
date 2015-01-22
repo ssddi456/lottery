@@ -1,7 +1,15 @@
-.bg {
+body {
   background: url(bg.png) center center #000000;
   background-attachment: fixed;
+  color: white;
   font-family: 微软雅黑;
+}
+body input,
+body textarea {
+  color: black;
+}
+body input {
+  margin-left: 10px;
 }
 .container {
   margin: 20px auto 0;
