@@ -81,10 +81,6 @@ html
       h1 设置
       .row
         .col-sm-12
-          button.btn.btn-default(data-bind="click : toggle(edit_name_list)")
-            | 编辑人员名单
-          button.btn.btn-default(data-bind="click : toggle(edit_goods)")
-            | 编辑奖项
           button.btn.btn-default(data-bind="click  : exports_res")
             | 获得结果(json)
           button.btn.btn-default(data-bind="click  : exports_res.bind(null,'cvs')")
@@ -93,15 +89,16 @@ html
             | 获得抽奖日志
           button.btn.btn-default(data-bind="click  : reset")
             | 重置设置
-      // ko if:(edit_name_list())
-      .edit_name_list
-        textarea.input_names(placeholder="粘贴入人员名单",
-                 style="width:1000px;",
-                 data-bind="value : names")
-      // /ko
-      // ko if:(edit_goods())
       .row
         .col-sm-12
+          h2 编辑人员名单
+          .edit_name_list
+            textarea.input_names(placeholder="粘贴入人员名单",
+                     style="width:1000px;",
+                     data-bind="value : names")
+      .row
+        .col-sm-12
+          h2 编辑奖项
           table.table
             tbody(data-bind="foreach: goods")
               tr
@@ -115,9 +112,9 @@ html
                   .btn.btn-default(data-bind="click: $parent.goods.remove.bind($parent.goods,$data)")
                     i.glyphicon.glyphicon-remove
           .btn.btn-default(data-bind="click:function(){ goods.push({ name : '', peer : 10, total : ''})}")
-            | add goods
+            | 添加奖项
           .btn.btn-default(data-bind="click:goods.save")
-      // /ko
+            | 保存
     // /ko
     script.
       var require = {

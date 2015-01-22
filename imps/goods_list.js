@@ -6,17 +6,9 @@ define([
   __
 ){
   var default_list = [{
-    name  : '三等奖',
+    name  : '奖',
     peer  : 10,
     total : 20
-  },{
-    name  : '二等奖',
-    peer  : 9,
-    total : ''
-  },{
-    name  : '一等奖',
-    peer  : 1,
-    total : ''
   }];
 
 
