@@ -15,7 +15,13 @@ define([
 
   var name_list = ko.computed(function() {
                     localStorage.setItem('name_list', names() );
-                    return names().split(/[\r\n]+/g);
+                    return names().split(/[\r\n]+/g)
+                            .map(function( name ) {
+                              return name.trim()
+                            })
+                            .filter(function( name ) {
+                              return name != '';
+                            });
                   });
   var ret = name_list();
   ret.names = names;

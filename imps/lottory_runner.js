@@ -55,7 +55,7 @@ define([
       // 洗牌
       shuffle(name_list);
       // 抽出头n个
-      var ret = name_list.slice(0, n );
+      var ret = name_list.slice( -1 * n );
 
       lottory_history.log('time', Date.now(), 'idx', current_stage.name, 'gainer', ret );
 
@@ -70,7 +70,7 @@ define([
       current_stage.process += n;
       this.total_res( this.total_res() + n );
       if( conf.no_repick ){
-        name_list = name_list.slice(n);
+        name_list = name_list.slice(0, name_list.length - n);
       }
       if( current_stage.process >= current_stage.total ){
         current_stage.end = true;

@@ -1,0 +1,21 @@
+<script type="text/javascript" src="../libs/require.js">
+</script>
+<script>
+var total_20k = [];
+for(var i = 1;i<20001;i++){
+  switch( (i+'').length ){
+    case 1: total_20k.push('0000' + i); break;
+    case 2: total_20k.push('000' + i); break;
+    case 3: total_20k.push('00' + i); break;
+    case 4: total_20k.push('0' + i); break;
+    case 5: total_20k.push( i); break;
+  }
+}
+  require([
+    '../imps/shuffle.js'
+  ],function(shuffle) {
+    console.log( total_20k[Math.floor(Math.random() * total_20k.length)] );
+    shuffle( total_20k );
+    console.log( total_20k.slice(10) );
+  });
+</script>
